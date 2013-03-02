@@ -9,7 +9,7 @@
   "version": "1",
   "checksums": {
     "Modulefile": "d61364c37c2e82a500b45353a2495e05",
-    "README.md": "47436184cba17bf6f363c21f1758bc3b",
+    "README.md": "96f098fd9d2af068a10cd28645ed770e",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "files/xdebug.conf.ini": "6079cba1baf3b2e2f3da41e24c677776",
     "manifests/init.pp": "c2fba0325018f81e38ec9cf031e6cfbc",

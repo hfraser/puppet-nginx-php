@@ -1,5 +1,5 @@
 # nginxphp
-Install and configure Nginx with PHP-FPM. This module will also allow you to install a proper PHP environment.
+Puppet Module to install and configure Nginx with PHP-FPM. This module will also allow you to install a proper PHP environment.
 
 dependencies:
   'puppetlabs/apt', '>=1.1.0'
