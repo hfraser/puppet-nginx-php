@@ -1,0 +1,57 @@
+server {
+    set $website_host "<%= @name %>";
+    set $website_root "<%= @website_root %>";
+    set $default_controller "<%= @default_controller %>";
+	set $php_pool_addr "<%= @php_pool_addr %>";
+	
+    listen 80;
+    server_name $website_host;
+
+    # Gzip
+    gzip on;
+    gzip_min_length 1000;
+    gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_disable "MSIE [1-6]\.";
+
+    access_log /var/log/nginx/$website_host.access.log;
+
+    root $website_root;
+    index $default_controller;
+    
+    charset utf-8;
+
+    location / {
+        # If the file exists as a static file serve it directly without
+        # running all the other rewite tests on it
+        if (-f $request_filename) {
+            expires max;
+            break;
+        }
+        
+        if ($request_filename !~ "\.(js|htc|ico|gif|jpg|png|css)$") {
+            rewrite ^(.*) /$default_controller$1 last;
+        }
+    }
+
+    location ~ "^(.+\.php)($|/)" {
+
+        set $script $uri;
+        set $path_info "/";
+
+        if ($uri ~ "^(.+\.php)($|/)") {
+            set $script $1;
+        }
+
+        if ($uri ~ "^(.+\.php)(/.+)") {
+            set $script $1;
+            set $path_info $2;
+        }
+
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass $php_pool_addr;
+
+        fastcgi_param SCRIPT_FILENAME $website_root$script;
+        fastcgi_param SCRIPT_NAME $script;
+        fastcgi_param PATH_INFO $path_info;
+    }
+}

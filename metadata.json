@@ -1,0 +1,37 @@
+{
+  "name": "Hans-Frederic Fraser-nginxphp",
+  "author": "Hans-Frederic Fraser",
+  "description": "This module was created in order to simplify the instalation of nginx and php-fpm for developpers in vagrant and production environments.",
+  "license": "gpl v3.0",
+  "project_page": "https://bitbucket.org/hfraser/puppet-nginx-php",
+  "source": "https://bitbucket.org/hfraser/puppet-nginx-php",
+  "summary": "Install Nginx, php-fpm also php debug and build environment",
+  "version": "1",
+  "checksums": {
+    "Modulefile": "d61364c37c2e82a500b45353a2495e05",
+    "README.md": "47436184cba17bf6f363c21f1758bc3b",
+    "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
+    "files/xdebug.conf.ini": "6079cba1baf3b2e2f3da41e24c677776",
+    "manifests/init.pp": "c2fba0325018f81e38ec9cf031e6cfbc",
+    "manifests/nginx.pp": "1204d64bd32887d140d9ac90142db845",
+    "manifests/pear.pp": "49dfa56e71b070cbf2525e70ff25914d",
+    "manifests/php.pp": "20b4c45bb5b807d0853913b110f55a4c",
+    "manifests/phpdev.pp": "cb572360249d396467ae0d20abf71673",
+    "manifests/ppa.pp": "3c052ea73c87aa9698d65ef4a5b1e8cf",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+    "templates/nginx.php.conf.erb": "95dfa825a973358b9cdab1a10a2ffac4",
+    "templates/pool.conf.erb": "2e4c6062e3c8f172085ee435139b8cb0",
+    "tests/init.pp": "68b7a589c5434f3d64a1fa794b385ecc"
+  },
+  "dependencies": [
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": "\u003e\u003d1.1.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": "\u003e\u003d3.2.0"
+    }
+  ]
+}
