@@ -1,4 +1,4 @@
-name 'nginxphp'
+name 'cmantix-nginxphp'
 version '1'
 
 author 'Hans-Frederic Fraser'

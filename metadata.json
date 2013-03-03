@@ -1,5 +1,5 @@
 {
-  "name": "Hans-Frederic Fraser-nginxphp",
+  "name": "cmantix-nginxphp",
   "author": "Hans-Frederic Fraser",
   "description": "This module was created in order to simplify the instalation of nginx and php-fpm for developpers in vagrant and production environments.",
   "license": "gpl v3.0",
@@ -8,7 +8,7 @@
   "summary": "Install Nginx, php-fpm also php debug and build environment",
   "version": "1",
   "checksums": {
-    "Modulefile": "d61364c37c2e82a500b45353a2495e05",
+    "Modulefile": "c4e90acf2273bd2d577d8e3218b37b31",
     "README.md": "96f098fd9d2af068a10cd28645ed770e",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "files/xdebug.conf.ini": "6079cba1baf3b2e2f3da41e24c677776",
