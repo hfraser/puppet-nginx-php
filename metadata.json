@@ -8,7 +8,7 @@
   "summary": "Install Nginx, php-fpm also php debug and build environment",
   "version": "1.0.0",
   "checksums": {
-    "Modulefile": "3b7ac3770cfe6a784ed454facafdc051",
+    "Modulefile": "eca7596136c4d10b3f48b7d0477593b9",
     "README.md": "96f098fd9d2af068a10cd28645ed770e",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "files/xdebug.conf.ini": "6079cba1baf3b2e2f3da41e24c677776",
