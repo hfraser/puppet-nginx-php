@@ -51,7 +51,9 @@ listen = <%= @fpm_listen %>
 ; must be separated by a comma. If this value is left blank, connections will be
 ; accepted from any ip address.
 ; Default Value: any
+<% if @fpm_allowed_clients != '' %>
 listen.allowed_clients = <%= @fpm_allowed_clients %>
+<% end %>
 
 ; Choose how the process manager will control the number of child processes.
 ; Possible Values:
@@ -235,7 +237,7 @@ pm.max_spare_servers = 6
 ; The access log file
 ; Default: not set
 <% if @php_devmode %>
-access.log = log/$pool.access.log
+access.log = /var/log/$pool.access.log
 <% end %>
 
 
@@ -301,7 +303,7 @@ access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
 ; Default Value: not set
 ; Note: slowlog is mandatory if request_slowlog_timeout is set
 <% if @php_devmode %>
-slowlog = log/$pool.log.slow
+slowlog = /var/log/$pool.log.slow
 <% end %>
  
 ; The timeout for serving a single request after which a PHP backtrace will be

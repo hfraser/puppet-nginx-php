@@ -21,7 +21,7 @@
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
     "templates/nginx.php.conf.erb": "95dfa825a973358b9cdab1a10a2ffac4",
-    "templates/pool.conf.erb": "2e4c6062e3c8f172085ee435139b8cb0",
+    "templates/pool.conf.erb": "bd97568570cdd2394146282cdba41345",
     "tests/init.pp": "68b7a589c5434f3d64a1fa794b385ecc"
   },
   "dependencies": [
