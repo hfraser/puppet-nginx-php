@@ -15,13 +15,7 @@
 # Sample Usage:
 #     include nginxphp::nginxphp
 #
-class nginxphp::php($php_packages, $withppa=false){
-  if ($withppa) {
-    $fpm_init_name = 'php5-fpm'
-  } else {
-    $fpm_init_name = 'php-fpm'
-  }
-  
+class nginxphp::php($php_packages){
   # install FPM
   package {
     'php5-fpm' :
@@ -35,7 +29,7 @@ class nginxphp::php($php_packages, $withppa=false){
       hasrestart => true,
       hasstatus   => true,
       require => Package['php5-fpm'],
-      restart => "/etc/init.d/${fpm_init_name} restart"
+      restart => "/etc/init.d/php5-fpm restart"
   }
   
   # remove fpm default pool

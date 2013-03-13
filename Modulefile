@@ -1,5 +1,5 @@
 name 'cmantix-nginxphp'
-version '1.0.0'
+version '1.0.1'
 
 author 'Hans-Frederic Fraser'
 license 'gpl v3.0'
