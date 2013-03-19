@@ -395,6 +395,6 @@ chdir = /
 
 <% if @php_devmode %>
 php_flag[display_errors] = on
-php_admin_value[error_log] = /var/log/fpm-php.$pool.log
+php_admin_value[error_log] = /var/log/fpm-php.<%= @name %>.log
 php_admin_flag[log_errors] = on
 <% end %>
