@@ -5,7 +5,7 @@ server {
 	set $php_pool_addr "<%= @php_pool_addr %>";
 	
     listen 80;
-    server_name $website_host;
+    server_name "<%= @name %>";
 
     # Gzip
     gzip on;
