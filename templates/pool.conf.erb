@@ -1,5 +1,5 @@
 ; Start a new pool named 'www'.
-; the variable $pool can we used in any directive and will be replaced by the
+; the variable <%= @name %> can we used in any directive and will be replaced by the
 ; pool name ('www' here)
 [<%= @name %>]
 
@@ -14,7 +14,7 @@
 ; When not set, the global prefix (or /usr) applies instead.
 ; Note: This directive can also be relative to the global prefix.
 ; Default Value: none
-;prefix = /path/to/pools/$pool
+;prefix = /path/to/pools/<%= @name %>
 
 ; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group
@@ -90,22 +90,22 @@ pm = dynamic
 ; forget to tweak pm.* to fit your needs.
 ; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
 ; Note: This value is mandatory.
-pm.max_children = 10
+pm.max_children = <%= @fpm_max_children %>
 
 ; The number of child processes created on startup.
 ; Note: Used only when pm is set to 'dynamic'
 ; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
-pm.start_servers = 4
+pm.start_servers = <%= @fpm_start_servers %>
 
 ; The desired minimum number of idle server processes.
 ; Note: Used only when pm is set to 'dynamic'
 ; Note: Mandatory when pm is set to 'dynamic'
-pm.min_spare_servers = 2
+pm.min_spare_servers = <%= @fpm_min_spare_servers %>
 
 ; The desired maximum number of idle server processes.
 ; Note: Used only when pm is set to 'dynamic'
 ; Note: Mandatory when pm is set to 'dynamic'
-pm.max_spare_servers = 6
+pm.max_spare_servers = <%= @fpm_max_spare_servers %>
 
 ; The number of seconds after which an idle process will be killed.
 ; Note: Used only when pm is set to 'ondemand'
@@ -215,8 +215,8 @@ pm.max_spare_servers = 6
 ;       anything, but it may not be a good idea to use the .php extension or it
 ;       may conflict with a real PHP file.
 ; Default Value: not set 
-;pm.status_path = /status
- 
+pm.status_path = /fpm-status 
+
 ; The ping URI to call the monitoring page of FPM. If this value is not set, no
 ; URI will be recognized as a ping page. This could be used to test from outside
 ; that FPM is alive and responding, or to
@@ -227,7 +227,7 @@ pm.max_spare_servers = 6
 ;       anything, but it may not be a good idea to use the .php extension or it
 ;       may conflict with a real PHP file.
 ; Default Value: not set
-;ping.path = /ping
+ping.path = /ping
 
 ; This directive may be used to customize the response of a ping request. The
 ; response is formatted as text/plain with a 200 response code.
@@ -236,9 +236,9 @@ pm.max_spare_servers = 6
 
 ; The access log file
 ; Default: not set
-<% if @php_devmode %>
-access.log = /var/log/$pool.access.log
-<% end %>
+<% if @php_devmode || @fpm_access_log -%>
+access.log = /var/log/<%= @name %>.access.log
+<% end -%>
 
 
 ; The access log format.
@@ -294,25 +294,25 @@ access.log = /var/log/$pool.access.log
 ;  %u: remote user
 ;
 ; Default: "%R - %u %t \"%m %r\" %s"
-<% if @php_devmode %>
+<% if @php_devmode || @fpm_access_log -%>
 access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
-<% end %>
+<% end -%>
 
  
 ; The log file for slow requests
 ; Default Value: not set
 ; Note: slowlog is mandatory if request_slowlog_timeout is set
-<% if @php_devmode %>
-slowlog = /var/log/$pool.log.slow
-<% end %>
+<% if @php_devmode || @fpm_slow_log -%>
+slowlog = /var/log/<%= @name %>.log.slow
+<% end -%>
  
 ; The timeout for serving a single request after which a PHP backtrace will be
 ; dumped to the 'slowlog' file. A value of '0s' means 'off'.
 ; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
 ; Default Value: 0
-<% if @php_devmode %>
+<% if @php_devmode || @fpm_slow_log -%>
 request_slowlog_timeout = 2s
-<% end %>
+<% end -%>
 
  
 ; The timeout for serving a single request after which the worker process will
@@ -324,13 +324,17 @@ request_slowlog_timeout = 2s
  
 ; Set open file descriptor rlimit.
 ; Default Value: system defined value
-;rlimit_files = 1024
- 
+<% if @fpm_rlimit_files != :undef -%>
+rlimit_files = <%= @fpm_rlimit_files %>
+<% end -%>
+
 ; Set max core size rlimit.
 ; Possible Values: 'unlimited' or an integer greater or equal to 0
 ; Default Value: system defined value
-;rlimit_core = 0
- 
+<% if @fpm_rlimit_core != :undef -%> 
+rlimit_core = <%= @fpm_rlimit_core %>
+<% end -%>
+
 ; Chroot to this directory at the start. This value must be defined as an
 ; absolute path. When this value is not set, chroot is not used.
 ; Note: you can prefix with '$prefix' to chroot to the pool prefix or one
@@ -352,7 +356,10 @@ chdir = /
 ; Note: on highloaded environement, this can cause some delay in the page
 ; process time (several ms).
 ; Default Value: no
-;catch_workers_output = yes
+<% if @fpm_catch_workers_output -%>
+catch_workers_output = yes
+<% end -%>
+
 
 ; Limits the extensions of the main script FPM will allow to parse. This can
 ; prevent configuration mistakes on the web server side. You should only limit
@@ -391,10 +398,18 @@ chdir = /
 ; Default Value: nothing is defined by default except the values in php.ini and
 ;                specified at startup with the -d argument
 ;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
-;php_admin_value[memory_limit] = 32M
+php_admin_value[memory_limit] = 2048M
 
-<% if @php_devmode %>
+<% if @php_devmode -%>
 php_flag[display_errors] = on
-php_admin_value[error_log] = /var/log/fpm-php.<%= @name %>.log
 php_admin_flag[log_errors] = on
-<% end %>
+<% end -%>
+
+<% if @php_devmode || @fpm_error_log-%>
+php_admin_value[error_log] = /var/log/fpm-php.<%= @name %>.log
+<% end -%>
+
+<% if @pool_cfg_append -%><% pool_cfg_append.sort_by{ |k, v| k.to_s == 'allow' ? '' : k.to_s }.each do |key,value| -%>
+<%= key %> = <%= value %>
+<% end -%>
+<% end -%> 
