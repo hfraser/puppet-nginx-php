@@ -1,4 +1,4 @@
-import '*.pp'
+#import '*.pp'
 
 # Class: cmantix/nginxphp
 #
